@@ -134,7 +134,9 @@ def find_best_arrangement_with_custom_pallet(box: Box, box_count: int, pallet: P
     """
     Find the best arrangement for a given box count using a custom pallet size.
     
-    This function is typically used when the standard pallet size is insufficient.
+    This function tries multiple strategies:
+    1. Standard rectangular grid patterns
+    2. Advanced mixed-orientation patterns
     
     Args:
         box: Box instance with dimensions
@@ -144,6 +146,7 @@ def find_best_arrangement_with_custom_pallet(box: Box, box_count: int, pallet: P
     Returns:
         Best arrangement found, or None if no arrangement fits
     """
+    # First try standard rectangular patterns
     candidates = generate_candidates(box_count)
     
     best_arrangement = None
@@ -164,5 +167,26 @@ def find_best_arrangement_with_custom_pallet(box: Box, box_count: int, pallet: P
             best_arrangement = arrangement
             best_area = area
             best_score = score
+    
+    # Always try advanced mixed patterns and spatial 2D placement
+    from .advanced_patterns import try_mixed_pattern_arrangement
+    from .spatial_2d import find_2d_spatial_arrangement
+    
+    # Try spatial 2D placement first (more sophisticated)
+    spatial_arrangement = find_2d_spatial_arrangement(box, box_count, pallet)
+    if spatial_arrangement:
+        spatial_area = calculate_arrangement_area(spatial_arrangement, box)
+        if best_arrangement is None or spatial_area <= best_area:
+            print(f"Found spatial 2D arrangement!")
+            return spatial_arrangement
+    
+    # Try advanced mixed patterns
+    advanced_arrangement = try_mixed_pattern_arrangement(box, box_count, pallet)
+    if advanced_arrangement:
+        # If we found an advanced pattern, prefer it for complex arrangements
+        advanced_area = calculate_arrangement_area(advanced_arrangement, box)
+        if best_arrangement is None or advanced_area <= best_area:
+            print(f"Found advanced mixed pattern!")
+            return advanced_arrangement
     
     return best_arrangement
