@@ -129,7 +129,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Author
 
-Created with assistance from GitHub Copilot
+Ryne Crabtree
 Date: July 2025
 
 ## Acknowledgments
