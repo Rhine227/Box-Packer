@@ -1,8 +1,0 @@
-# Core visualization dependency
-matplotlib>=3.7.0,<4.0.0
-
-# Optional development dependencies (uncomment if needed)
-# pytest>=7.0.0  # For testing
-# black>=22.0.0  # For code formatting
-# flake8>=4.0.0  # For linting
-# mypy>=0.991    # For type checking
